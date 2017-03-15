@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h1><strong> Test </strong></h1>
+    <p>Виберіть до кожного з питаннь правильну відповідь</p>
+    <form method="post">
+    {% csrf_token %}
+    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+        {% for question in latest_question_list %}
+        <div class="form-group">
+            <h3>{{ question.question_text }}</h3>
+            <div class="radio">
+                <label>
+                    <input type="radio" name="question{{ question.id }}" value="1">
+                    {{ question.answer1_text }}
+                </label>
+            </div>
+            <div class="radio">
+                <label>
+                    <input type="radio" name="question{{ question.id }}" value="2">
+                    {{ question.answer2_text }}
+                </label>
+            </div>
+            <div class="radio">
+                <label>
+                    <input type="radio" name="question{{ question.id }}" value="3">
+                    {{ question.answer3_text }}
+                </label>
+            </div>
+            {% if question.answer4_text != 'null' %}
+            <div class="radio">
+                <label>
+                    <input type="radio" name="question{{ question.id }}" value="4">
+                    {{ question.answer4_text }}
+                </label>
+            </div>
+            {% endif %}
+        </div>
+        {% endfor %}
+        <p class="text-right">
+            <input type="submit" value="Готово" class="btn btn-default" />
+        </p>
+    </form>
+</div>
+{% endblock %}
